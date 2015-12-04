@@ -1,13 +1,20 @@
 #! /usr/bin/python
 
-#import sys
+# File: generate-signatures.py
+# Description:  It will generate and set up Gmail signatures for multiple users
+#               For that, we need to have a CSV file with user data (name, surname, phone, etc)
+#               Finally, it will use GAM to set up the proper signature to each user
+# Author: Xabier Ezpeleta - xezpeleta@tknika.eus
+
 import csv
 from string import Template
 from os.path import join
 from os import system
 
 USERS_CSV = 'users.csv'
+SIGN_TEMPLATE = 'signature-template.html'
 SIGN_DIR = './generated'
+GAM_PATH = '/usr/bin/python ../../gam.py'
 
 def getUsersInfoFromCSV(csvFile):
   users = []
@@ -26,7 +33,7 @@ def getUsersInfoFromCSV(csvFile):
 
 def generateSignatures(users, signsDir):
   print 'Generating signatures in %s...' % (signsDir)
-  f = open('signature-template.html')
+  f = open(SIGN_TEMPLATE)
   src = Template(f.read())
 
   for user in users:
@@ -40,7 +47,7 @@ def generateSignatures(users, signsDir):
 def configureSignatures(users, signsDir):
   for user in users:
       filename = join(signsDir, '%s-signature.html' % user['username'])
-      cmd = '/usr/bin/python ../../gam.py user %s signature file %s' % (user['email'], filename)
+      cmd = '%s user %s signature file %s' % (GAM_PATH, user['email'], filename)
       print cmd
       system(cmd)
 
