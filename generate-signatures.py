@@ -33,6 +33,12 @@ def getUsersInfoFromCSV(csvFile):
       users.append(user)
   return users
 
+def modifyUsersInfo(users, item, value):
+  for user in users:
+    if user[item]:
+      user[item] = value % user[item]
+  return users
+
 def generateSignatures(users, signsDir):
   print 'Generating signatures in %s...' % (signsDir)
   f = open(SIGN_TEMPLATE)
@@ -56,5 +62,7 @@ def configureSignatures(users, signsDir):
 
 if __name__ == '__main__':
   users = getUsersInfoFromCSV(USERS_CSV)
+  users = modifyUsersInfo(users, 'phone', '(+34) %s -')
+  users = modifyUsersInfo(users, 'mobile', '(+34) %s -')
   generateSignatures(users, SIGN_DIR)
   configureSignatures(users, SIGN_DIR)
