@@ -2,8 +2,10 @@
 
 # File: generate-signatures.py
 # Description:  It will generate and set up Gmail signatures for multiple users
-#               For that, we need to have a CSV file with user data (name, surname, phone, etc)
-#               Finally, it will use GAM to set up the proper signature to each user
+#               Having a CSV file with user data (name, surname, phone, etc) and
+#               a template file (see signature-template.html) it will generate
+#               a signature file for each user. Finally, it will use GAM to set
+#               up user's Gmail account to use the signature.
 # Author: Xabier Ezpeleta - xezpeleta@tknika.eus
 
 import csv
