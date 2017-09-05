@@ -16,7 +16,7 @@ from os import system
 USERS_CSV = 'users.csv'
 SIGN_TEMPLATE = 'signature-template.html'
 SIGN_DIR = './generated'
-GAM_PATH = '/usr/bin/python ../../gam.py'
+GAM_PATH = '/usr/local/bin/gam'
 
 def getUsersInfoFromCSV(csvFile):
   users = []
@@ -55,7 +55,7 @@ def generateSignatures(users, signsDir):
 def configureSignatures(users, signsDir):
   for user in users:
       filename = join(signsDir, '%s-signature.html' % user['username'])
-      cmd = '%s user %s signature file %s' % (GAM_PATH, user['email'], filename)
+      cmd = '%s user %s signature file %s html' % (GAM_PATH, user['email'], filename)
       print cmd
       system(cmd)
 
