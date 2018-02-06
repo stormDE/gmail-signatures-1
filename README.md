@@ -1,31 +1,48 @@
-# gmail-signatures
+# gmail-signatures (UNMAINTAINED)
 
-This Python script will generate and set up Gmail signatures for multiple users.
+THIS PROJECT IS NOT MAINTAINED ANYMORE. GAM ADDED THE SAME FEATURE:
 
-Having a [CSV file](users.csv) with users data (name, surname, phone, etc) and a template file (see [signature-template.html](signature-template.html)) it will generate a signature file for each user.
 
-Finally, it will use [GAM](https://github.com/jay0lee/GAM) to set up user's Gmail account to use the generated signature.
-
-## examples
-
-```
-$ python generate-signatures.py
-./generated/ethomson-signature.html
-./generated/jford-signature.html
-Setting Signature for ethomson@mycompany.com (1 of 1)
-Setting Signature for jford@mycompany.com (1 of 1)
+Signature template:
+```html
+<!-- signature.html -->
+<!-- html signature here -->
+{name} {surname}
+{jobtitle}
+{email}
+Phone: {phone} ({extphone}) / {mobile}
 ```
 
-## advanced
-
-If you need to post-process some string, you can use the modifyUsersInfo() function:
-
-```python
-users = modifyUsersInfo(users, 'phone', '(+34) %s -')
+Configure the signature to a specific user:
+```
+# GAM command to configure a signature to a specific user
+gam user myusername@mydomain.com signature file signature.html html |
+  replace name ~name \
+  replace surname ~surname \
+  replace jobtitle ~jobtitle \
+  replace email ~email replace \
+  phone ~phone replace \
+  extphone ~extphone \
+  replace mobile ~mobile
 ```
 
-It will convert **666123456** into **(+34) 666123456 -**
+Configure the signature using a list of users:
+```
+# users.csv
+username,name,surname,jobtitle,email,phone,extphone,mobile
+jsmith, John, Smith, fsdf, jsmith@mydomain.com, 0055555, 3434, 66565656
+lcroft, Lara, Croft, oeoe, lcroft@mydomain.com, 0055444, 3436, 66767857
+...
+```
 
-## todo
-
-Parameters to specify csv file, template, signatures directory, data modificators, etc...
+```
+# GAM command to configure a signature to a list of users from a CSV
+gam csv users.csv gam user ~email signature file signature-v2.html html \
+  replace name ~name \
+  replace surname ~surname \
+  replace jobtitle ~jobtitle \
+  replace email ~email replace \
+  phone ~phone replace \
+  extphone ~extphone \
+  replace mobile ~mobile
+```
