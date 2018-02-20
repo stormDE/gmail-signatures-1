@@ -13,10 +13,11 @@ from string import Template
 from os.path import join
 from os import system
 
+# Edit here all of your Paths
 USERS_CSV = 'users.csv'
 SIGN_TEMPLATE = 'signature-template.html'
-SIGN_DIR = './generated'
-GAM_PATH = '/usr/local/bin/gam'
+SIGN_DIR = '~/Desktop/gmail-signatures-master/generate'
+GAM_PATH = '~/bin/gam/gam'
 
 def getUsersInfoFromCSV(csvFile):
   users = []
@@ -55,14 +56,14 @@ def generateSignatures(users, signsDir):
 def configureSignatures(users, signsDir):
   for user in users:
       filename = join(signsDir, '%s-signature.html' % user['username'])
-      cmd = '%s user %s signature file %s html' % (GAM_PATH, user['email'], filename)
+      cmd = '%s user %s signature file %s' % (GAM_PATH, user['email'], filename)
       print cmd
       system(cmd)
 
 
 if __name__ == '__main__':
   users = getUsersInfoFromCSV(USERS_CSV)
-  users = modifyUsersInfo(users, 'phone', '(+34) %s -')
-  users = modifyUsersInfo(users, 'mobile', '(+34) %s -')
+  users = modifyUsersInfo(users, 'phone', '(+49)%s')
+  users = modifyUsersInfo(users, 'mobile', '(+49)%s')
   generateSignatures(users, SIGN_DIR)
   configureSignatures(users, SIGN_DIR)
